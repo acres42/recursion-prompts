@@ -131,18 +131,14 @@ var exponent = function(base, exp) {
   if(exp === 0){
     return 1;
   }
-
-  if(exp === 1){
-    return base;
-  } 
   
-  if(exp > 1){
+  if(exp > 0){
     return base * exponent(base, exp-1);
   }
 
   if(exp < 0){
-      var absVal = Math.abs(exp);
-    return 1 / exponent(base, absVal-1);
+    return 1 / exponent(base, exp * -1);
+    exp++;
   }
 
 };
@@ -152,7 +148,22 @@ var exponent = function(base, exp) {
 // powerOfTwo(16); // true
 // powerOfTwo(10); // false
 var powerOfTwo = function(n) {
+ //(2^x)
+
+ if((n < 2 && n > 1) || (n === 0)){
+  return false;
+ }
+
+ if(n === 1){
+  return true;
+ }
+
+ if(n > 1){
+  return powerOfTwo(n / 2);
+ }
+
 };
+
 
 // 9. Write a function that reverses a string.
 var reverse = function(string) {
@@ -189,7 +200,40 @@ var palindrome = function(string) {
 // modulo(17,5) // 2
 // modulo(22,6) // 4
 var modulo = function(x, y) {
+var leftover;
+
+if(y === 0 ){
+  return NaN;
+}
+
+if(x < 0 && y < 0 && x > y){
+  return x;
+} else if(x < 0 && y < 0 && x < y){
+  leftover = x - y;
+  return modulo(leftover, y);
+}
+
+if(x < 0 && y < 0 && x-y > y){
+  leftover = x-y;
+  return leftover;
+}
+
+if(x < y){
+  return x;
+}
+
+if(x - y < y ){
+  leftover = x-y;
+  return leftover;
+}
+
+if(x - y >= y){
+  leftover = x - y;
+  return modulo(leftover, y);
+}
+
 };
+
 
 // 12. Write a function that multiplies two numbers without using the * operator or
 // Math methods.
